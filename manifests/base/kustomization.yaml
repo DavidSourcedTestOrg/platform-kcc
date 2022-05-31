@@ -10,5 +10,6 @@ patchesStrategicMerge:
     apiVersion: v1
     kind: ServiceAccount
     metadata:
+      name: cnrm-controller-manager
       annotations:
         iam.gke.io/gcp-service-account: crnm-system@david-brownbag.iam.gserviceaccount.com
