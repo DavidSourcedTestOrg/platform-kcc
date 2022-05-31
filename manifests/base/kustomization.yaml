@@ -4,3 +4,36 @@ kind: Kustomization
 resources:
 - https://raw.githubusercontent.com/GoogleCloudPlatform/k8s-config-connector/master/install-bundles/install-bundle-gcp-identity/0-cnrm-system.yaml
 - https://raw.githubusercontent.com/GoogleCloudPlatform/k8s-config-connector/master/install-bundles/install-bundle-gcp-identity/crds.yaml
+
+
+patchesStrategicMerge:
+  - |
+    apiVersion: autoscaling/v2beta2
+    kind: HorizontalPodAutoscaler
+    metadata:
+      annotations:
+        cnrm.cloud.google.com/version: 1.86.0
+      labels:
+        cnrm.cloud.google.com/system: "true"
+      name: cnrm-webhook
+      namespace: cnrm-system
+    spec:
+      maxReplicas: 20
+      metrics:
+      - resource:
+          name: memory
+          target:
+            averageUtilization: 90
+            type: Utilization
+        type: Resource
+      - resource:
+          name: cpu
+          target:
+            averageUtilization: 90
+            type: Utilization
+        type: Resource
+      minReplicas: 2
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: cnrm-webhook-manager
