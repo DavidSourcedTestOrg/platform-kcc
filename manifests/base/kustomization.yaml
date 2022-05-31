@@ -4,3 +4,11 @@ kind: Kustomization
 resources:
 - https://raw.githubusercontent.com/GoogleCloudPlatform/k8s-config-connector/v1.86.0/install-bundles/install-bundle-workload-identity/crds.yaml
 - https://raw.githubusercontent.com/GoogleCloudPlatform/k8s-config-connector/v1.86.0/install-bundles/install-bundle-workload-identity/0-cnrm-system.yaml
+
+patchesStrategicMerge:
+  - |
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      annotations:
+        iam.gke.io/gcp-service-account: crnm-system@david-brownbag.iam.gserviceaccount.com
