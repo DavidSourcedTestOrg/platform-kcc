@@ -11,5 +11,7 @@ patchesStrategicMerge:
     kind: ServiceAccount
     metadata:
       name: cnrm-controller-manager
+      namespace: cnrm-system
+
       annotations:
         iam.gke.io/gcp-service-account: crnm-system@david-brownbag.iam.gserviceaccount.com
